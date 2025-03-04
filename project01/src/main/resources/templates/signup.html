@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="jp" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>sign up</title>
+</head>
+<body>
+    <h1>sign up</h1>
+    <form th:action="@{/signup}" method="post" onsubmit="return validCheck()">
+        <p th:text="${msg}" class="text-danger"></p>
+        <label for="username">id</label>
+        <input id="username" name="username" required>
+        <label for="password">pw</label>
+        <input type="password" id="password" name="password" required>
+        <label for="password">pw</label>
+        <input type="password" id="passwordCheck" name="passwordCheck" required>
+        <button type="submit">sign up</button>
+    </form>
+</body>
+</html>
+<script>
+    function validCheck(){
+        let pw = document.getElementById('password').value
+        let pw2 = document.getElementById('passwordCheck').value
+        if(pw != pw2){
+            alert("warn!");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>

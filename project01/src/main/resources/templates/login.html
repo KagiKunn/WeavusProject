@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="jp" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form th:action="@{/login}" method="post">
+        <label for="username">Name</label>
+        <input id="username" name="username" required autofocus>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Sign in</button>
+        <button type="button" onclick="locatin.href='/signup'">Sign up</button>
+    </form>
+</body>
+</html>
