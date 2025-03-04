@@ -17,6 +17,7 @@ public class MainService {
 
     public String login(String username, String password) {
         Boolean check = userRepository.existsByUsernameAndPassword(username,password);
+
         System.out.println(check);
         if(check) {
             return "redirect:/";

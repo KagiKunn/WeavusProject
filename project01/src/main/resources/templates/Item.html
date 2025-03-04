@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>Item</title>
+</head>
+<body>
+    <h1>Item Registry</h1>
+    <form th:action="@{/itemRegistry}" method="post">
+        <div>
+            <label for="name">name</label>
+            <input id="name" name="name">
+        </div>
+        <div>
+            <label for="description">description</label>
+            <textarea id="description" name="description" style="resize:none"></textarea>
+        </div>
+        <div><button type="submit">save</button></div>
+        <a th:href="@{/home}">back</a>
+    </form>
+</body>
+</html>

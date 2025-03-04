@@ -1,6 +1,7 @@
 package com.example.project01.controller;
 
 import com.example.project01.entity.UserEntity;
+import com.example.project01.service.ItemService;
 import com.example.project01.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,29 +14,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HomeController {
 
     private final MainService mainService;
+    private final ItemService itemService;
 
 //    public HomeController(MainService mainService) {
 //        this.mainService = mainService;
 //    }
 
-    @GetMapping("/")
-    public String home() {
-        return "home";
+    @GetMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("items",itemService.findAll());
+        return "/home";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
-    }
-
-    @GetMapping("/B")
-    public String B() {
-        return "signup";
-    }
-
-    @GetMapping("/C")
-    public String C() {
-        return "Cpage";
+        return "/login";
     }
 
     @PostMapping("/login")
