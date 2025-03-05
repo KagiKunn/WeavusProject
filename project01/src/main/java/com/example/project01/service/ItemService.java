@@ -53,7 +53,7 @@ public class ItemService {
 
     public void deleteItem(int no) {
         System.out.println("deleteItem called");
-//        itemRepository.deleteById(no);
+        itemRepository.deleteById(no);
     }
 
     public boolean editItem(int userno, ItemDto itemDto,HttpSession session) {

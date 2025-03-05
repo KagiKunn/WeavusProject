@@ -3,17 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>edit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
-    <form th:action="@{/edit}" method="post">
-        <input type="hidden" name="id" th:value="${item.id}">
-        <input type="hidden" name="user" th:value="${item.user.getId()}">
-        <label for="name">title</label>
-        <input type="text" id="name" name="name" th:value="${item.name}">
-        <label for="description">description</label>
-        <input type="text" id="description" name="description" th:value="${item.description}">
-        <button type="submit">edit</button>
-    </form>
+    <div class="container text-center" style="width:50vw">
+        <div class="card">
+            <div class="card-header">
+                <h3>Item Edit</h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/edit}" method="post" class="list-group">
+                    <input type="hidden" name="id" th:value="${item.id}">
+                    <input type="hidden" name="user" th:value="${item.user.getId()}">
+                    <div class="list-group-item">
+                        <label for="name">title</label>
+                        <input type="text" id="name" name="name" th:value="${item.name}">
+                    </div>
+                    <div class="list-group-item">
+                        <label for="description">description</label>
+                        <input type="text" id="description" name="description" th:value="${item.description}">
+                    </div>
+                    <div class="list-group-item">
+                        <div clas="card-footer">
+                            <button class="btn btn-primary" type="submit">edit</button>
+                            <a class="btn btn-danger" th:href="@{/deleteItem/{id}(id=${item.id})}">delete</a>
+                            <a class="btn btn-secondary" th:href="@{/home}">back</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

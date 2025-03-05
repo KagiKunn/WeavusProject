@@ -40,8 +40,8 @@ public class ItemController {
         return "redirect:/home";
     }
 
-    @PostMapping("/deleteItem")
-    public String deleteItem(@RequestParam int no, HttpSession session) {
+    @GetMapping("/deleteItem/{id}")
+    public String deleteItem(@PathVariable Integer no, HttpSession session) {
         System.out.println("item no : " + no);
         itemService.deleteItem(no);
         return "redirect:/home";
