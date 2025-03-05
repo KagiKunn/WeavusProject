@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-    <button onclick="location.href='login'">A</button>
-    <button onclick="location.href='signup'">B</button>
-    <button onclick="location.href='item'">C</button>
-    <table>
+<body style="margin:0;padding:0;display: flex;justify-content: center;flex-direction: column;gap:2vh">
+    <h2 th:text="${session.user != null ? session.user.getUsername():''}" style="text-align: center"></h2>
+    <div style="display: flex;justify-content: center">
+        <button onclick="location.href='login'">Sign in</button>
+        <button onclick="location.href='signup'">Sign up</button>
+        <button onclick="location.href='item'">Item</button>
+    </div>
+    <table style="margin:1vw;border:1px solid gray">
         <thead>
             <tr>
                 <th>Name</th>
@@ -19,12 +22,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="item : ${items}">
+            <tr th:each="item : ${items}" style="text-align: center">
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.description}"></td>
                 <td th:text="${item.createdAt}"></td>
                 <td th:text="${item.updatedAt}"></td>
-                <td th:text="${item.userId}"></td>
+                <td th:text="${item.user.username}"></td>
             </tr>
         </tbody>
     </table>

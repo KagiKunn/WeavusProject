@@ -11,5 +11,5 @@ public class ItemDto {
     private String description;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private int userId;
+    private UserDto userId;
 }

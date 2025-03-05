@@ -1,18 +1,15 @@
 package com.example.project01.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
 @Entity
-@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +18,8 @@ public class ItemEntity {
     private String description;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private int userId;
-//    @JoinColumn(name = "user_id")
-//    @ManyToOne
-//    private UserEntity userId;
-
+//    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

@@ -1,6 +1,9 @@
 package com.example.project01.service;
 
+import com.example.project01.dto.UserDto;
+import com.example.project01.entity.UserEntity;
 import com.example.project01.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,13 @@ public class MainService {
     }
 
 
-    public String login(String username, String password) {
-        Boolean check = userRepository.existsByUsernameAndPassword(username,password);
+    public String login(UserDto user, HttpSession session) {
+        Boolean check = userRepository.existsByUsernameAndPassword(user.getUsername(), user.getPassword());
 
         System.out.println(check);
         if(check) {
-            return "redirect:/";
+            session.setAttribute("user", user);
+            return "redirect:/home";
         }
         else{
             return "redirect:/login";
