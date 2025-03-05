@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,11 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
 
+    private final MainService mainService;
+
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
-    public List<ItemEntity> findAll() {
+    public List<ItemEntity> findAll(Model model) {
         try{
+            model.addAttribute("msg", "welcome");
             return itemRepository.findAll();
         }
         catch(Exception e){
@@ -31,25 +35,51 @@ public class ItemService {
     }
     @Transactional
     public boolean itemRegistry(ItemDto itemDto, HttpSession session) {
-        System.out.println("method called");
+        System.out.println("itemRegistry called");
         try{
-            System.out.println(session.getAttribute("user"));
-            UserDto userDto = (UserDto) session.getAttribute("user");
-            System.out.println("User ID from session: " + userDto.getUsername());
-            UserEntity user = userRepository.findByUsername(userDto.getUsername()).orElseThrow(() -> new IllegalArgumentException("User not found with auth_id: "));
-            System.out.println("user here : " + user.getId());
+            UserEntity user = (UserEntity) session.getAttribute("user");
             ItemEntity itemEntity = ItemEntity.builder()
                     .name(itemDto.getName())
                     .description(itemDto.getDescription())
                     .createdAt(LocalDate.now())
                     .user(user)
                     .build();
-            System.out.println("build complete!");
             itemRepository.save(itemEntity);
             return true;
         } catch (Exception e){
-            System.out.println("Gatcha!");
             return false;
         }
+    }
+
+    public void deleteItem(int no) {
+        System.out.println("deleteItem called");
+//        itemRepository.deleteById(no);
+    }
+
+    public boolean editItem(int userno, ItemDto itemDto,HttpSession session) {
+        System.out.println("editItem called");
+        int userId = -1;
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        if (user != null) {
+            userId = user.getId();
+            System.out.println("User ID: " + userId);
+            if(userId == userno){
+                ItemEntity itemEntity = itemRepository.findById(itemDto.getId()).orElseThrow();
+                itemEntity = itemEntity.toBuilder()
+                        .name(itemDto.getName())
+                        .description(itemDto.getDescription())
+                        .updatedAt(LocalDate.now())
+                        .build();
+                itemRepository.save(itemEntity);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public ItemEntity findItem(int no) {
+        return itemRepository.findById(no).orElseThrow(() -> new IllegalArgumentException("Item not found"));
     }
 }

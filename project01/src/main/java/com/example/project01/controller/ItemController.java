@@ -1,13 +1,13 @@
 package com.example.project01.controller;
 
 import com.example.project01.dto.ItemDto;
+import com.example.project01.dto.UserDto;
 import com.example.project01.service.ItemService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +25,25 @@ public class ItemController {
         else{
             System.out.println("fail");
         }
+        return "redirect:/home";
+    }
+    @GetMapping("/edit/{id}")
+    public String modifyItem(@PathVariable Integer id, Model model) {
+        System.out.println("item no : " + id);
+        model.addAttribute("item",itemService.findItem(id));
+        return "edit";
+    }
+    @PostMapping("/edit")
+    public String editItem(@ModelAttribute ItemDto itemDto, @RequestParam int user,  HttpSession session) {
+        System.out.println("!!!!!!!!!!!!!->>>" + user);
+        itemService.editItem(user,itemDto,session);
+        return "redirect:/home";
+    }
+
+    @PostMapping("/deleteItem")
+    public String deleteItem(@RequestParam int no, HttpSession session) {
+        System.out.println("item no : " + no);
+        itemService.deleteItem(no);
         return "redirect:/home";
     }
 }

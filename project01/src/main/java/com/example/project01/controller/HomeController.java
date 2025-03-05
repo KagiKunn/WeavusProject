@@ -23,7 +23,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model) {
-        model.addAttribute("items",itemService.findAll());
+        model.addAttribute("items",itemService.findAll(model));
         return "/home";
     }
 
@@ -34,8 +34,11 @@ public class HomeController {
 
     @PostMapping("/login")
     public String loginProcess(UserDto user, Model model, HttpSession session) {
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        return mainService.login(user, session);
+        return mainService.login(user, session, model);
+    }
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/home";
     }
 }

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,6 @@ public class ItemEntity {
     private String description;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-//    private int userId;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
