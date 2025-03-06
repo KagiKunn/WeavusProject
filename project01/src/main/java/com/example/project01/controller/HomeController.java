@@ -17,19 +17,20 @@ public class HomeController {
     private final MainService mainService;
     private final ItemService itemService;
 
-//    public HomeController(MainService mainService) {
-//        this.mainService = mainService;
-//    }
-
+    @GetMapping("/")
+    public String index(Model model) {
+        return "redirect:/home";
+    }
+    
     @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("items",itemService.findAll(model));
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
     @PostMapping("/login")

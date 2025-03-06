@@ -1,7 +1,6 @@
 package com.example.project01.controller;
 
 import com.example.project01.dto.ItemDto;
-import com.example.project01.dto.UserDto;
 import com.example.project01.service.ItemService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -38,12 +37,13 @@ public class ItemController {
         System.out.println("!!!!!!!!!!!!!->>>" + user);
         itemService.editItem(user,itemDto,session);
         return "redirect:/home";
+
     }
 
     @GetMapping("/deleteItem/{id}")
-    public String deleteItem(@PathVariable Integer no, HttpSession session) {
-        System.out.println("item no : " + no);
-        itemService.deleteItem(no);
+    public String deleteItem(@PathVariable Integer id, HttpSession session) {
+        System.out.println("item no : " + id);
+        itemService.deleteItem(id,session);
         return "redirect:/home";
     }
 }

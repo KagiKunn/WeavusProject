@@ -1,90 +1,96 @@
 <!DOCTYPE html>
 <html lang="jp" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+				integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-<div class="container">
-    <th:block th:if="${session.user != null}">
-    <h1 th:text="|${msg} ${session.user.username}|"></h1>
-<!--        <h2 th:text="" style="text-align: center"></h2>-->
-        <div>
-            <button onclick="location.href='item'">Item</button>
-            <button onclick="logout()">Logout</button>
-        </div>
-    </th:block>
-    <th:block th:unless="${session.user != null}">
-        <div>
-            <button onclick="location.href='login'">Sign in</button>
-            <button onclick="location.href='signup'">Sign up</button>
-        </div>
-    </th:block>
+<script crossorigin="anonymous"
+				integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+				src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+				integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<style>
+	.td-btn{
+			transition:background-color 0.2s ease;
+	}
+	.td-btn:hover{
+			background:#eeeeee;
+			cursor:pointer;
+	}
+</style>
+<div class="container p-3">
+	<div>
+		<div>
+			<th:block th:if="${session.user != null}">
+				<div class="row">
+					<div class="col">
+						<h1 th:text="|Welcome ${session.user.username}|"></h1>
+					</div>
+					<div class="col text-end">
+						<button class="btn btn-primary" onclick="location.href='item'">Item</button>
+						<button class="btn btn-secondary" onclick="logout()">Logout</button>
+					</div>
+				</div>
+			</th:block>
+			<th:block th:unless="${session.user != null}">
+				<div class="row">
+					<div class="col">
+						<h1 th:text="|Welcome Guest|"></h1>
+					</div>
+					<div class="col text-end">
+						<button class="btn btn-primary" onclick="location.href='login'">Sign in</button>
+						<button class="btn btn-secondary" onclick="location.href='signup'">Sign up</button>
+					</div>
+				</div>
+			</th:block>
+		</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Desc</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>user</th>
-<!--                <th> </th>-->
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="item : ${items}">
-                <td><a class="btn btn-primer" th:href="@{/edit/{id}(id=${item.id})}">
-                    <span th:text="${item.name}"></span>
-                </a></td>
-                <td th:text="${item.description}"></td>
-                <td th:text="${item.createdAt}"></td>
-                <td th:text="${item.updatedAt}"></td>
-                <td th:text="${item.user.username}"></td>
-<!--                <td>-->
-<!--                    <button th:attr="onclick='modifyItem(' + ${item.id} + ')'" >mod</button>-->
-<!--                    <button th:attr="onclick='deleteItem(' + ${item.id} + ')'" >del</button>-->
-<!--                </td>-->
-            </tr>
-        </tbody>
-    </table>
+		<div>
+			<table class="table text-center">
+				<thead>
+				<tr>
+					<th class="col-1">Name</th>
+					<th class="col-4">Desc</th>
+					<th class="col-1">user</th>
+					<th class="col-2">Updated</th>
+					<th class="col-2">Created</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr class="td-btn" th:each="item : ${items}" th:onclick="window.location.href='/edit/' + [[${item.id}]]">
+					<td><span th:text="${item.name}"></span></td>
+					<td th:text="${item.description}"></td>
+					<td th:text="${item.user.username}"></td>
+					<td th:text="${item.updatedAt}"></td>
+					<td th:text="${item.createdAt}"></td>
+				</tr>
+
+				<!--				<tr th:each="item : ${items}">-->
+<!--					<td><a class="btn btn-primer" th:href="@{/edit/{id}(id=${item.id})}">-->
+<!--						<span th:text="${item.name}"></span>-->
+<!--					</a></td>-->
+<!--					<td th:text="${item.description}"></td>-->
+<!--					<td th:text="${item.user.username}"></td>-->
+<!--					<td th:text="${item.updatedAt}"></td>-->
+<!--					<td th:text="${item.createdAt}"></td>-->
+<!--				</tr>-->
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 </body>
 </html>
+
 <script>
-    function logout(){
+    function logout() {
         let f = document.createElement("form");
-        f.setAttribute('method','post');
-        f.setAttribute('action','/logout');
-        document.body.appendChild(f);
-        f.submit();
-    }
-    function modifyItem(no){
-        alert('working~');
-        let f = document.createElement("form");
-        let i = document.createElement("input")
-        f.setAttribute('method','post');
-        f.setAttribute('action','/modifyItem');
-        i.setAttribute('type','hidden');
-        i.setAttribute('name','no');
-        i.setAttribute('value',no);
-        f.appendChild(i);
-        document.body.appendChild(f);
-        f.submit();
-    }
-    function deleteItem(no){
-        alert('delete');
-        let f = document.createElement("form");
-        let i = document.createElement("input")
-        f.setAttribute('method','post');
-        f.setAttribute('action','/deleteItem');
-        i.setAttribute('type','hidden');
-        i.setAttribute('name','no');
-        i.setAttribute('value',no);
-        f.appendChild(i);
+        f.setAttribute('method', 'post');
+        f.setAttribute('action', '/logout');
         document.body.appendChild(f);
         f.submit();
     }
